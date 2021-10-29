@@ -15,6 +15,13 @@ const insertOne = async (collectionName, item) => (
     .catch((err) => err)
 );
 
+const logIn = async (collectionName, { email, password}) => (
+  connection()
+    .then((db) => db.collection(collectionName).findOne({ email, password }))
+    .then((res) => res)
+    .catch((err) => err)
+)
+
 const findByfield = (collectionName, field, item) => (
   connection()
     .then((db) => db.collection(collectionName).find({ [field]: item }).toArray())
@@ -46,6 +53,7 @@ const insertAdminUser = (collectionName, item) => (
 module.exports = {
   getAll,
   insertOne,
+  logIn,
   findByfield,
   updateOne,
   deleteOne,

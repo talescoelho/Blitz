@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'));
 
-app.use('/users', users);
+app.use('/', users);
 
 app.listen(port, () => console.log(`Example app listening on port ${ port }!`));
 

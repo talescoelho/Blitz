@@ -418,8 +418,8 @@ describe('Teste: Tasks', () => {
       let user = await chai.request(server)
         .post('/login')
         .send({
-          'email': 'test@mail.com',
-          'password': '123123',
+          'email': 'rh@email.com',
+          'password': 'rh123',
         });
       expect(user).to.have.status(StatusCodes.OK);
       expect(user.body).to.have.property('token');
@@ -437,7 +437,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_ACCEPTABLE);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Email ou senha não conferem');
+      expect(user.body.message).to.be.equal('Email or password do not match');
     });
 
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
@@ -449,7 +449,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_ACCEPTABLE);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Email already registered');
+      expect(user.body.message).to.be.equal('Email or password do not match');
     });
 
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
@@ -461,19 +461,20 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_ACCEPTABLE);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Email ou senha não conferem');
+      expect(user.body.message).to.be.equal('Email or password do not match');
     });
 
-    it('caminho: POST "/login" Logar com o email mal formatado', async () => {
+    it('caminho: POST "/login" Email ou senha não conferem', async () => {
       let user = await chai.request(server)
         .post('/login')
         .send({
           'email': 'test@rh.com',
-          'password': '12312',
+          'password': '12',
         });
+
       expect(user).to.have.status(StatusCodes.NOT_ACCEPTABLE);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Email ou senha não conferem');
+      expect(user.body.message).to.be.equal('Email or password do not match');
     });
   });
 });

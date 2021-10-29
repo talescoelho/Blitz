@@ -11,7 +11,7 @@ const errorMessage = (message) => ({
   message,
 });
 
-const schema = Joi.object({
+const schemaUser = Joi.object({
   name: Joi.string().min(1).required(),
   email: Joi.string().required(),
   password: Joi.string().min(1).required(),
@@ -19,7 +19,7 @@ const schema = Joi.object({
 });
 
 const verifyUserFields = async (req, res, next) => {
-  const { error } = schema.validate(req.body);
+  const { error } = schemaUser.validate(req.body);
   if (error && error.details.find((err) => err)) {
     return res.status(StatusCodes.NOT_FOUND).json(errorMessage(error.message));
   }
@@ -38,6 +38,27 @@ const verifyUserFields = async (req, res, next) => {
   next();
 };
 
+const schemaLogin = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().min(1).required(),
+});
+
+const verifyLoginFields = async (req, res, next) => {
+  const { error } = schemaLogin.validate(req.body);
+  if (error && error.details.find((err) => err)) {
+    return res.status(StatusCodes.NOT_FOUND).json(errorMessage(error.message));
+  }
+
+  const { email } = req.body;
+
+  if (!validator.validate(email)) {
+    return res.status(StatusCodes.NOT_ACCEPTABLE).json(errorMessage('Email or password do not match'));
+  }
+
+  next();
+};
+
 module.exports = {
   verifyUserFields,
+  verifyLoginFields,
 };
