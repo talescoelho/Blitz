@@ -83,8 +83,11 @@ describe('Teste de integração', () => {
           'private': false,
         });
       expect(task).to.have.status(StatusCodes.OK);
-      expect(task.body).to.have.property('task');
-      expect(task.body.task).to.be.equal('Verificar contratações');
+      expect(task.body.task).to.have.property('task');
+      expect(task.body.task).to.have.property('create');
+      expect(task.body.task).to.have.property('update');
+      expect(task.body.task).to.have.property('userId');
+      expect(task.body.task.task).to.be.equal('Verificar contratações');
     });
   });
 
@@ -156,9 +159,9 @@ describe('Teste de integração', () => {
         .get('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body[0]).to.have.property('task');
-      expect(tasks.body[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.length).to.be.equal(1);
+      expect(tasks.body.tasks[0]).to.have.property('task');
+      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
+      expect(tasks.body.tasks.length).to.be.equal(1);
     });
 
     it('caminho: GET "/tasks" "ADMIN" comum recuperando todas as "tasks"', async () => {
@@ -173,9 +176,9 @@ describe('Teste de integração', () => {
         .get('/tasks')
         .set({ 'Authorization': `${admKey}` });
       expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body[0]).to.have.property('task');
-      expect(tasks.body[0].task).to.be.equal('Verificar contratações como ADMIN');
-      expect(tasks.body.length).to.be.equal(2);
+      expect(tasks.body.tasks[0]).to.have.property('task');
+      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações como ADMIN');
+      expect(tasks.body.tasks.length).to.be.equal(2);
     });
   });
 
@@ -193,9 +196,9 @@ describe('Teste de integração', () => {
         .get(`/tasks/${userRh.body.id}`)
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body[0]).to.have.property('task');
-      expect(tasks.body[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.length).to.be.equal(1);
+      expect(tasks.body.tasks[0]).to.have.property('task');
+      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
+      expect(tasks.body.tasks.length).to.be.equal(1);
     });
 
     it('caminho: GET "/tasks/:id" sem task inserida pelo usuário', async () => {
@@ -205,7 +208,6 @@ describe('Teste de integração', () => {
       expect(tasks).to.have.status(StatusCodes.NOT_FOUND);
       expect(tasks.body).to.have.property('message');
       expect(tasks.body.message).to.be.equal('Não há nem uma task inserida');
-      expect(tasks.body.length).to.be.equal(2);
     });
   });
 
@@ -223,9 +225,9 @@ describe('Teste de integração', () => {
         .get('/tasks/?area="RH"')
         .set({ 'Authorization': `${admKey}` });
       expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body[0]).to.have.property('task');
-      expect(tasks.body[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.length).to.be.equal(1);
+      expect(tasks.body.tasks[0]).to.have.property('task');
+      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
+      expect(tasks.body.tasks.length).to.be.equal(1);
     });
 
     it('caminho: GET "/tasks/search" "ADMIN" recuperando as tasks de outra "area"', async () => {
@@ -240,9 +242,9 @@ describe('Teste de integração', () => {
         .get('/tasks/?area="RH"')
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body[0]).to.have.property('task');
-      expect(tasks.body[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.length).to.be.equal(1);
+      expect(tasks.body.tasks[0]).to.have.property('task');
+      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
+      expect(tasks.body.tasks.length).to.be.equal(1);
     });
 
     it('caminho: GET "/tasks/search" usuário recuperando as tasks de outra "area"', async () => {

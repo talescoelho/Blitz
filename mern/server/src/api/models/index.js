@@ -36,12 +36,12 @@ const deleteOne = (collectionName, id) => (
     .catch((err) => err)
 );
 
-const insertAdminUser = ((collectionName, item) => (
+const insertAdminUser = (collectionName, item) => (
   connection()
     .then((db) => db.collection(collectionName).insertOne(item))
     .then(() => (item))
     .catch((err) => err)
-))
+);
 
 module.exports = {
   getAll,
