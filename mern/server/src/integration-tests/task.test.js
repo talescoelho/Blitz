@@ -101,9 +101,9 @@ describe('Teste: Tasks', () => {
           'task': '',
           'private': false,
         });
-      expect(task).to.have.status(StatusCodes.BAD_REQUEST);
+      expect(task).to.have.status(StatusCodes.NOT_FOUND);
       expect(task.body).to.have.property('message');
-      expect(task.body.message).to.be.equal('Favor não inserir o campo vazio');
+      expect(task.body.message).to.be.equal('"task" is not allowed to be empty');
     });
 
     it('caminho: POST "/tasks" Quando inserir uma nova "task" sem o campo "task"', async () => {
@@ -113,9 +113,9 @@ describe('Teste: Tasks', () => {
         .send({
           'private': false,
         });
-      expect(task).to.have.status(StatusCodes.BAD_REQUEST);
+      expect(task).to.have.status(StatusCodes.NOT_FOUND);
       expect(task.body).to.have.property('message');
-      expect(task.body.message).to.be.equal('Favor não inserir o campo vazio');
+      expect(task.body.message).to.be.equal('"task" is required');
     });
 
     it('caminho: POST "/tasks" Quando inserir uma nova "task" sem o campo "private"', async () => {
@@ -125,9 +125,9 @@ describe('Teste: Tasks', () => {
         .send({
           'task': 'Verificar contratações',
         });
-      expect(task).to.have.status(StatusCodes.BAD_REQUEST);
+      expect(task).to.have.status(StatusCodes.NOT_FOUND);
       expect(task.body).to.have.property('message');
-      expect(task.body.message).to.be.equal('Favor não inserir o campo vazio');
+      expect(task.body.message).to.be.equal('"private" is required');
     });
 
     it('caminho: POST "/tasks" Quando inserir uma "task" sem estar "logado"', async () => {
@@ -141,7 +141,7 @@ describe('Teste: Tasks', () => {
         });
       expect(task).to.have.status(StatusCodes.UNAUTHORIZED);
       expect(task.body).to.have.property('message');
-      expect(task.body.message).to.be.equal('Favor logar para inserir uma nova tarefa');
+      expect(task.body.message).to.be.equal('jwt malformed');
     });
   });
 
