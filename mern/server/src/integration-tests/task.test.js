@@ -298,7 +298,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário sem o campo "name"');
+      expect(user.body.message).to.be.equal('"name" is required');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "name" vazio', async () => {
@@ -312,7 +312,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário com o campo "name" vazio');
+      expect(user.body.message).to.be.equal('"name" is not allowed to be empty');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "email"', async () => {
@@ -325,7 +325,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário sem o campo "email"');
+      expect(user.body.message).to.be.equal('"email" is required');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "email" vazio', async () => {
@@ -339,7 +339,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário com o campo "email" vazio');
+      expect(user.body.message).to.be.equal('"email" is not allowed to be empty');
     });
       
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "password"', async () => {
@@ -352,7 +352,7 @@ describe('Teste: Tasks', () => {
       });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário sem o campo "password"');
+      expect(user.body.message).to.be.equal('"password" is required');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "password" vazio', async () => {
@@ -366,7 +366,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário com o campo "password" vazio');
+      expect(user.body.message).to.be.equal('"password" is not allowed to be empty');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "area"', async () => {
@@ -379,7 +379,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário sem o campo "area"');
+      expect(user.body.message).to.be.equal('"area" is required');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "area" vazio', async () => {
@@ -393,7 +393,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não é possível criar um usuário com o campo "area" vazio');
+      expect(user.body.message).to.be.equal('"area" is not allowed to be empty');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário que já existe', async () => {
@@ -407,7 +407,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.CONFLICT);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Não usuário já existe');
+      expect(user.body.message).to.be.equal('Email already registered');
     });
     
   });
@@ -449,7 +449,7 @@ describe('Teste: Tasks', () => {
         });
       expect(user).to.have.status(StatusCodes.NOT_ACCEPTABLE);
       expect(user.body).to.have.property('message');
-      expect(user.body.message).to.be.equal('Email ou senha não conferem');
+      expect(user.body.message).to.be.equal('Email already registered');
     });
 
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
