@@ -1,16 +1,11 @@
 const servicesUsers = require('../services/servicesUsers');
-
-const getAllUsers = async (req, res) => {
-  const users = servicesUsers.getAllUsers();
-  res.status(200).json({ users });
-}
+const { StatusCodes } = require('http-status-codes');
 
 const insertUser = async (req, res) => {
-  const user = servicesUsers.insertUser(req.body);
-  res.status(200).json({ user });
+  const user = await servicesUsers.insertUser(req.body);
+  return res.status(StatusCodes.OK).json({ user });
 }
 
 module.exports = {
-  getAllUsers,
   insertUser,
 }

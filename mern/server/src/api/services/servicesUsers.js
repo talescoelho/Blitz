@@ -1,16 +1,11 @@
 const models = require('../models');
 
-const getAllUsers = async () => {
-  const users = models.getAll('users');
-  return users;
-};
-
 const insertUser = async (item) => {
-  const users = models.insertOne('users', item);
-  return users;
+  const users = await models.insertOne('users', item);
+  const { name, email, area, _id } = users;
+  return { name, email, area, _id };
 };
 
 module.exports = {
-  getAllUsers,
   insertUser,
 }

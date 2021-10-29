@@ -11,7 +11,7 @@ const getAll = (collectionName) => (
 const insertOne = async (collectionName, item) => (
   connection()
     .then((db) => db.collection(collectionName).insertOne(item))
-    .then((response) => ({ id: response.id, ...item }))
+    .then(() => (item))
     .catch((err) => err)
 );
 

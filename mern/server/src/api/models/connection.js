@@ -6,7 +6,7 @@ const OPTIONS = {
     useUnifiedTopology: true,
 };
 
-const MONGO_DB_URL = `mongodb://${process.env.HOST || 'mongodb'}:27017/Ebytr`;
+const MONGO_DB_URL = `mongodb://${process.env.HOST || 'localhost'}:27017/Ebytr`;
 const DB_NAME = 'Ebytr';
 let db = null;
 

@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai
 
-describe('Testes', () => {
+describe('Teste: App', () => {
   describe('Local: get "/"', () => {
     let response = {};
     it("verificando se o servidor ta on", async () => {
