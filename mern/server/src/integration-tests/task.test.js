@@ -38,7 +38,7 @@ describe('Teste: Tasks', () => {
         'name': 'rhTeste',
         'email': 'rh@email.com',
         'password': 'rh123',
-        'area': 'rh'
+        'area': 'rh',
       });
 
     userRh = await chai.request(server)
@@ -167,7 +167,7 @@ describe('Teste: Tasks', () => {
       expect(tasks).to.have.status(StatusCodes.OK);
       expect(tasks.body.tasks[0]).to.have.property('task');
       expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.tasks.length).to.be.equal(1);
+      expect(tasks.body.tasks.length).to.be.equal(2);
     });
 
     it('caminho: GET "/tasks" "ADMIN" comum recuperando todas as "tasks"', async () => {
@@ -184,96 +184,14 @@ describe('Teste: Tasks', () => {
       expect(tasks).to.have.status(StatusCodes.OK);
       expect(tasks.body.tasks[0]).to.have.property('task');
       expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações como ADMIN');
-      expect(tasks.body.tasks.length).to.be.equal(2);
-    });
-  });
-
-  // recuperar as próprias tasks
-  describe('Recuperar as "tasks"', () => {
-    it('caminho: GET "/tasks/:id" usuário recuperando suas próprias tasks', async () => {
-      await chai.request(server)
-        .post('/tasks/')
-        .set({ 'Authorization': `${userRh.body.token}` })
-        .send({
-          'task': 'Verificar contratações',
-          'private': false,
-        });
-      const tasks = await chai.request(server)
-        .get(`/tasks/${userRh.body.id}`)
-        .set({ 'Authorization': `${userRh.body.token}` });
-      expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body.tasks[0]).to.have.property('task');
-      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.tasks.length).to.be.equal(1);
-    });
-
-    it('caminho: GET "/tasks/:id" sem task inserida pelo usuário', async () => {
-      const tasks = await chai.request(server)
-        .get(`/tasks/${userRh.body.id}`)
-        .set({ 'Authorization': `${userRh.body.token}` });
-      expect(tasks).to.have.status(StatusCodes.NOT_FOUND);
-      expect(tasks.body).to.have.property('message');
-      expect(tasks.body.message).to.be.equal('Não há nem uma task inserida');
-    });
-  });
-
-  // recuperar todas as tasks do setor
-  describe('Recuperar as "tasks"', () => {
-    it('caminho: GET "/tasks/search" usuário recuperando as tasks de sua "area"', async () => {
-      await chai.request(server)
-        .post('/tasks/')
-        .set({ 'Authorization': `${userRh.body.token}` })
-        .send({
-          'task': 'Verificar contratações',
-          'private': false,
-        });
-      const tasks = await chai.request(server)
-        .get('/tasks/?area="RH"')
-        .set({ 'Authorization': `${admKey}` });
-      expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body.tasks[0]).to.have.property('task');
-      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.tasks.length).to.be.equal(1);
-    });
-
-    it('caminho: GET "/tasks/search" "ADMIN" recuperando as tasks de outra "area"', async () => {
-      await chai.request(server)
-        .post('/tasks/')
-        .set({ 'Authorization': `${userRh.body.token}` })
-        .send({
-          'task': 'Verificar contratações',
-          'private': false,
-        });
-      const tasks = await chai.request(server)
-        .get('/tasks/?area="RH"')
-        .set({ 'Authorization': `${userRh.body.token}` });
-      expect(tasks).to.have.status(StatusCodes.OK);
-      expect(tasks.body.tasks[0]).to.have.property('task');
-      expect(tasks.body.tasks[0].task).to.be.equal('Verificar contratações');
-      expect(tasks.body.tasks.length).to.be.equal(1);
-    });
-
-    it('caminho: GET "/tasks/search" usuário recuperando as tasks de outra "area"', async () => {
-      await chai.request(server)
-        .post('/tasks/')
-        .set({ 'Authorization': `${userRh.body.token}` })
-        .send({
-          'task': 'Verificar contratações',
-          'private': false,
-        });
-      const tasks = await chai.request(server)
-        .get('/tasks/?area="RH"')
-        .set({ 'Authorization': `${userRh.body.token}` });
-      expect(tasks).to.have.status(StatusCodes.UNAUTHORIZED);
-      expect(tasks.body).to.have.property('message');
-      expect(tasks.body.message).to.be.equal('Você não tem permissão para ver as tasks de outros setores');
+      expect(tasks.body.tasks.length).to.be.equal(4);
     });
   });
 
   // Inserir users com sucesso
   describe('Quando inserir um usuário COM sucesso', () => {
     it('caminho: POST "/users" Inserir um novo usuario com sucesso', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',

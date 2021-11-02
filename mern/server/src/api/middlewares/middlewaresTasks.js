@@ -35,6 +35,7 @@ const validToken = (req, res, next) => {
     }
     const id = '_id';
     req.userId = decoded[id];
+    req.decoded = decoded;
     return next();
   });
 };

@@ -1,8 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
 const servicesUsers = require('../services/servicesUsers');
 
+const data = {
+  create: new Date(),
+  update: new Date(),
+  role: 'user',
+};
+
 const insertUser = async (req, res) => {
-  const user = await servicesUsers.insertUser(req.body);
+  const user = await servicesUsers.insertUser({ ...req.body, ...data });
   return res.status(StatusCodes.OK).json({ user });
 };
 
