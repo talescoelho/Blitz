@@ -11,8 +11,8 @@
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
-        },
-        "ecmaVersion": 13
+        }
+        // "ecmaVersion": 13
     },
     "plugins": [
         "react"
