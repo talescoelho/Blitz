@@ -10,8 +10,9 @@ const getAll = (collectionName) => (
 
 const insertOne = async (collectionName, item) => (
   connection()
-    .then((db) => db.collection(collectionName).insertOne(item))
-    .then(() => (item))
+    .then((db) => db.collection(collectionName)
+      .insertOne({ ...item, create: new Date(), update: new Date() }))
+    .then(() => ({ ...item, create: new Date(), update: new Date() }))
     .catch((err) => err)
 );
 
@@ -25,6 +26,13 @@ const logIn = async (collectionName, { email, password }) => (
 const findByfield = (collectionName, field, item) => (
   connection()
     .then((db) => db.collection(collectionName).find({ [field]: item }).toArray())
+    .then((res) => res)
+    .catch((err) => err)
+);
+
+const findId = (collectionName, id) => (
+  connection()
+    .then((db) => db.collection(collectionName).findOne(ObjectId(id)))
     .then((res) => res)
     .catch((err) => err)
 );
@@ -54,6 +62,7 @@ module.exports = {
   getAll,
   insertOne,
   logIn,
+  findId,
   findByfield,
   updateOne,
   deleteOne,

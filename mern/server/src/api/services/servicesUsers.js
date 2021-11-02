@@ -27,7 +27,14 @@ const logIn = async (item) => {
   return token;
 };
 
+const findId = async (id) => {
+  const user = await models.findId('users', id);
+  const { name, area } = user;
+  return { name, area };
+};
+
 module.exports = {
   insertUser,
   logIn,
+  findId,
 };

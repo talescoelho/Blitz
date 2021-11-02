@@ -4,8 +4,6 @@ const models = require('../models');
 
 const data = {
   status: 'pendente',
-  create: new Date(),
-  update: new Date(),
 };
 
 const insertTaks = async (item) => {

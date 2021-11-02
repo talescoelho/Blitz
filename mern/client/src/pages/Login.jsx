@@ -1,13 +1,15 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Redirect } from 'react-router-dom';
 import login from '../services/Login';
+import verifyToken from '../services/VerifyToken';
 import './css/Login.css';
 
 function Login() {
   const [validated, setValidated] = useState(false);
-  const [user, setUser] = useState({ email: '', password: '' });
+  const [user, setUser] = useState({ email: 'user@email.com', password: '123456' });
   const [loggedUser, setLoggedUser] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -34,38 +36,43 @@ function Login() {
     return <Redirect to="/home" />;
   }
 
-  return (
-    <div>
-      <Form noValidate validated={validated}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            value={user.email}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+  const token = verifyToken();
+  if (token) {
+    return <Redirect to="/home" />;
+  }
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={user.password}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Manter Logado" />
-        </Form.Group>
-        <Button variant="primary" type="button" onClick={handleSubmit}>
-          Submit
-        </Button>
+  return (
+    <div className="main-items">
+      <Form noValidate validated={validated}>
+        <Row className="justify-content-center">
+          <img src="logo.png" alt="pageIcon" style={{ width: '50%' }} />
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              value={user.email}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={user.password}
+              onChange={handleChange}
+              required
+            />
+            <Button variant="primary" type="button" onClick={handleSubmit} style={{ width: '100%', marginTop: '10px' }}>
+              Submit
+            </Button>
+          </Form.Group>
+        </Row>
       </Form>
     </div>
   );

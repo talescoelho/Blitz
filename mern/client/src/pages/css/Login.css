@@ -1,0 +1,8 @@
+.main-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+  margin: 0 auto;
+  width: 30vw;
+}

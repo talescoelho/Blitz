@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 const validator = require('email-validator');
+const { ObjectId } = require('mongodb');
 const models = require('../models');
 
 const errorMessage = (message) => ({
@@ -54,7 +55,16 @@ const verifyLoginFields = async (req, res, next) => {
   return next();
 };
 
+const verifyId = (req, res, next) => {
+  const { id } = req.params;
+  if (!ObjectId.isValid(id)) {
+    return res.status(StatusCodes.NOT_FOUND).json({ message: 'id not Found' });
+  }
+  return next();
+};
+
 module.exports = {
   verifyUserFields,
   verifyLoginFields,
+  verifyId,
 };

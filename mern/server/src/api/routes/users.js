@@ -6,5 +6,6 @@ const middlewaresUsers = require('../middlewares/middlewaresUsers');
 
 router.post('/users', middlewaresUsers.verifyUserFields, controllersUsers.insertUser);
 router.post('/login', middlewaresUsers.verifyLoginFields, controllersUsers.logIn);
+router.get('/users/:id', middlewaresUsers.verifyId, controllersUsers.findId);
 
 module.exports = router;
