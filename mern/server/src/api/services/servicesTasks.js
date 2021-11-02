@@ -1,12 +1,11 @@
 const models = require('../models');
-const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = 'secretKey';
+// const SECRET_KEY = 'secretKey';
 
 const data = {
   create: Date.now(),
   update: Date.now(),
-}
+};
 
 const insertTaks = async (item) => {
   const tasks = await models.insertOne('tasks', { ...item, ...data });
@@ -16,4 +15,4 @@ const insertTaks = async (item) => {
 
 module.exports = {
   insertTaks,
-}
+};

@@ -1,7 +1,7 @@
 const Joi = require('joi');
-const models = require('../models');
 const { StatusCodes } = require('http-status-codes');
-const validator = require("email-validator");
+const validator = require('email-validator');
+const models = require('../models');
 
 const errorMessage = (message) => ({
   message,
@@ -31,7 +31,7 @@ const verifyUserFields = async (req, res, next) => {
     return res.status(StatusCodes.CONFLICT).json(errorMessage('Email already registered'));
   }
 
-  next();
+  return next();
 };
 
 const schemaLogin = Joi.object({
@@ -51,7 +51,7 @@ const verifyLoginFields = async (req, res, next) => {
     return res.status(StatusCodes.NOT_ACCEPTABLE).json(errorMessage('Email or password do not match'));
   }
 
-  next();
+  return next();
 };
 
 module.exports = {

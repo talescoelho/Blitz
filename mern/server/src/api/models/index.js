@@ -15,12 +15,12 @@ const insertOne = async (collectionName, item) => (
     .catch((err) => err)
 );
 
-const logIn = async (collectionName, { email, password}) => (
+const logIn = async (collectionName, { email, password }) => (
   connection()
     .then((db) => db.collection(collectionName).findOne({ email, password }))
     .then((res) => res)
     .catch((err) => err)
-)
+);
 
 const findByfield = (collectionName, field, item) => (
   connection()

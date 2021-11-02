@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../api/app');
 
 chai.use(chaiHttp);
 
-const { expect } = chai
+const { expect } = chai;
 
 describe('Teste: App', () => {
   describe('Local: get "/"', () => {
@@ -13,6 +14,6 @@ describe('Teste: App', () => {
       response = await chai.request(server).get('/');
 
       return expect(response).to.have.status(200);
-    })
+    });
   });
 });
