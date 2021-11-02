@@ -1,12 +1,15 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable quote-props */
+/* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../api/app');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { StatusCodes } = require('http-status-codes');
-const models = require('../api/models');
 const jwt = require('jsonwebtoken');
+const models = require('../api/models');
+const server = require('../api/app');
 
 chai.use(chaiHttp);
 
@@ -14,7 +17,6 @@ const { expect } = chai;
 const SECRET_KEY = 'secretKey';
 
 describe('Teste: Tasks', () => {
-  let response = {};
   let userRh = {};
   let admUser = {};
   let admKey = {};
@@ -27,7 +29,7 @@ describe('Teste: Tasks', () => {
       useUnifiedTopology: true,
     };
     const connectionMock = await MongoClient.connect(URLMock, OPTIONS);
-    
+
     sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
     await chai.request(server)
@@ -38,25 +40,29 @@ describe('Teste: Tasks', () => {
         'password': 'rh123',
         'area': 'rh'
       });
-      
+
     userRh = await chai.request(server)
       .post('/login')
       .send({
         'email': 'rh@email.com',
         'password': 'rh123'
       });
-    
+
     admUser = await models.insertAdminUser('users', {
       'name': 'admin',
       'email': 'admin@admin.com',
       'password': 'admin123',
       'area': 'admin',
       'role': 'admin',
-    })
+    });
 
-    const { _id, name, area, role } = admUser;
+    const {
+      _id, name, area, role
+    } = admUser;
 
-    admKey = jwt.sign({ _id, name, area, role }, SECRET_KEY)
+    admKey = jwt.sign({
+      _id, name, area, role
+    }, SECRET_KEY);
 
     await chai.request(server)
       .post('/tasks')
@@ -75,7 +81,7 @@ describe('Teste: Tasks', () => {
   // Inserir tasks com sucesso
   describe('Quando inserir uma task COM sucesso', () => {
     it('caminho: POST "/tasks" Quando inserir uma nova "task" com sucesso', async () => {
-      let task = await chai.request(server)
+      const task = await chai.request(server)
         .post('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` })
         .send({
@@ -94,7 +100,7 @@ describe('Teste: Tasks', () => {
   // Inserir tasks sem sucesso
   describe('Quando inserir uma task SEM sucesso', () => {
     it('caminho: POST "/tasks" Quando inserir uma nova "task" com o campo "task" vazio', async () => {
-      let task = await chai.request(server)
+      const task = await chai.request(server)
         .post('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` })
         .send({
@@ -107,7 +113,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/tasks" Quando inserir uma nova "task" sem o campo "task"', async () => {
-      let task = await chai.request(server)
+      const task = await chai.request(server)
         .post('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` })
         .send({
@@ -119,7 +125,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/tasks" Quando inserir uma nova "task" sem o campo "private"', async () => {
-      let task = await chai.request(server)
+      const task = await chai.request(server)
         .post('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` })
         .send({
@@ -131,8 +137,8 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/tasks" Quando inserir uma "task" sem estar "logado"', async () => {
-      const invalidToken = 'invalidToken'
-      let task = await chai.request(server)
+      const invalidToken = 'invalidToken';
+      const task = await chai.request(server)
         .post('/tasks')
         .set({ 'Authorization': `${invalidToken}` })
         .send({
@@ -155,7 +161,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get('/tasks')
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
@@ -172,7 +178,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get('/tasks')
         .set({ 'Authorization': `${admKey}` });
       expect(tasks).to.have.status(StatusCodes.OK);
@@ -192,7 +198,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get(`/tasks/${userRh.body.id}`)
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
@@ -202,7 +208,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: GET "/tasks/:id" sem task inserida pelo usuário', async () => {
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get(`/tasks/${userRh.body.id}`)
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.NOT_FOUND);
@@ -221,7 +227,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get('/tasks/?area="RH"')
         .set({ 'Authorization': `${admKey}` });
       expect(tasks).to.have.status(StatusCodes.OK);
@@ -238,7 +244,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get('/tasks/?area="RH"')
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.OK);
@@ -255,7 +261,7 @@ describe('Teste: Tasks', () => {
           'task': 'Verificar contratações',
           'private': false,
         });
-      let tasks = await chai.request(server)
+      const tasks = await chai.request(server)
         .get('/tasks/?area="RH"')
         .set({ 'Authorization': `${userRh.body.token}` });
       expect(tasks).to.have.status(StatusCodes.UNAUTHORIZED);
@@ -289,7 +295,7 @@ describe('Teste: Tasks', () => {
   // Inserir users sem sucesso
   describe('Quando inserir um usuário SEM sucesso', () => {
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "name"', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'email': 'user@rh.com',
@@ -302,7 +308,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "name" vazio', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': '',
@@ -316,7 +322,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "email"', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',
@@ -329,7 +335,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "email" vazio', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',
@@ -341,22 +347,22 @@ describe('Teste: Tasks', () => {
       expect(user.body).to.have.property('message');
       expect(user.body.message).to.be.equal('"email" is not allowed to be empty');
     });
-      
+
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "password"', async () => {
-      let user = await chai.request(server)
-      .post('/users')
-      .send({
-        'name': 'User do RH',
-        'email': 'user@rh.com',
-        'area': 'rh',
-      });
+      const user = await chai.request(server)
+        .post('/users')
+        .send({
+          'name': 'User do RH',
+          'email': 'user@rh.com',
+          'area': 'rh',
+        });
       expect(user).to.have.status(StatusCodes.NOT_FOUND);
       expect(user.body).to.have.property('message');
       expect(user.body.message).to.be.equal('"password" is required');
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "password" vazio', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',
@@ -370,7 +376,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário sem o campo "area"', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',
@@ -383,7 +389,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário com o campo "area" vazio', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'User do RH',
@@ -397,7 +403,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/users" tentar inserir um usuário que já existe', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/users')
         .send({
           'name': 'admin',
@@ -409,13 +415,12 @@ describe('Teste: Tasks', () => {
       expect(user.body).to.have.property('message');
       expect(user.body.message).to.be.equal('Email already registered');
     });
-    
   });
 
   // Logar com sucesso
   describe('Logar com sucesso', () => {
     it('caminho: POST "/login" Logar com sucesso', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/login')
         .send({
           'email': 'rh@email.com',
@@ -429,7 +434,7 @@ describe('Teste: Tasks', () => {
   // Logar sem sucesso
   describe('Quando tenta logar e não tem sucesso', () => {
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/login')
         .send({
           'email': 'test@rh.',
@@ -441,7 +446,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/login')
         .send({
           'email': '@rh.com',
@@ -453,7 +458,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/login" Logar com o email mal formatado', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/login')
         .send({
           'email': 'testrh.com',
@@ -465,7 +470,7 @@ describe('Teste: Tasks', () => {
     });
 
     it('caminho: POST "/login" Email ou senha não conferem', async () => {
-      let user = await chai.request(server)
+      const user = await chai.request(server)
         .post('/login')
         .send({
           'email': 'test@rh.com',

@@ -1,8 +1,7 @@
-const models = require('../models');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
- 
+
 const SECRET_KEY = 'secretKey';
 
 const errorMessage = (message) => ({
@@ -14,13 +13,13 @@ const schemaTask = Joi.object({
   private: Joi.bool().required(),
 });
 
-const verifyTaskFields = async (req, res, next) => {
+const verifyTaskFields = (req, res, next) => {
   const { error } = schemaTask.validate(req.body);
   if (error && error.details.find((err) => err)) {
     return res.status(StatusCodes.NOT_FOUND).json(errorMessage(error.message));
   }
 
-  next();
+  return next();
 };
 
 const validToken = (req, res, next) => {
@@ -30,13 +29,13 @@ const validToken = (req, res, next) => {
     return res.status(StatusCodes.UNAUTHORIZED).json(errorMessage('missing auth token'));
   }
 
-  jwt.verify(authorization, SECRET_KEY, (err, decoded) => {
+  return jwt.verify(authorization, SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(StatusCodes.UNAUTHORIZED).json(errorMessage(err.message));
     }
-    const id = '_id'
+    const id = '_id';
     req.userId = decoded[id];
-    next();
+    return next();
   });
 };
 

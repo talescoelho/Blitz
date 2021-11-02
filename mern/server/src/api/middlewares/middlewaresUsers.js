@@ -1,11 +1,7 @@
-const models = require('../models');
 const Joi = require('joi');
-var validator = require("email-validator");
+const models = require('../models');
 const { StatusCodes } = require('http-status-codes');
- 
-// validator.validate("test@email.com");
-
-const SECRET = 'xablasMaster';
+const validator = require("email-validator");
 
 const errorMessage = (message) => ({
   message,

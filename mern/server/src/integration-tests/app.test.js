@@ -9,10 +9,10 @@ const { expect } = chai
 describe('Teste: App', () => {
   describe('Local: get "/"', () => {
     let response = {};
-    it("verificando se o servidor ta on", async () => {
-      response = await chai.request(server).get('/')
+    it('verificando se o servidor ta on', async () => {
+      response = await chai.request(server).get('/');
 
-      expect(response).to.have.status(200);
+      return expect(response).to.have.status(200);
     })
   });
 });
