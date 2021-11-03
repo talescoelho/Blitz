@@ -21,8 +21,20 @@ const getAllRoleTasks = async (item) => {
   return tasks;
 };
 
+const editTask = async (id, item) => {
+  const task = await models.updateOne('tasks', id, { ...item });
+  return task;
+};
+
+const deleteTask = async (id) => {
+  const task = await models.deleteOne('tasks', id);
+  return task;
+};
+
 module.exports = {
   insertTaks,
   getAllTasks,
   getAllRoleTasks,
+  editTask,
+  deleteTask,
 };
