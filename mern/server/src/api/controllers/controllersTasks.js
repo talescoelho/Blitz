@@ -22,7 +22,7 @@ const getAllTasks = async (req, res) => {
 
 const editTask = async (req, res) => {
   const { id } = req.params;
-  const task = await servicesTasks.editTask(req.body, id);
+  const task = await servicesTasks.editTask(id, req.body);
   return res.status(StatusCodes.OK).json({ task });
 };
 

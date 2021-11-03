@@ -39,7 +39,10 @@ const findId = (collectionName, id) => (
 
 const updateOne = (collectionName, id, item) => (
   connection()
-    .then((db) => db.collection(collectionName).updateOne({ _id: ObjectId(id) }, { $set: item }))
+    .then((db) => db.collection(collectionName).updateOne({ _id: ObjectId(id) }, {
+      $set:
+        { ...item, update: new Date() },
+    }))
     .then(() => ({ _id: id, ...item }))
     .catch((err) => err)
 );

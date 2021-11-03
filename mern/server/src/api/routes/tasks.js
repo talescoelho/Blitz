@@ -9,9 +9,9 @@ router.post('/tasks',
   middlewaresTasks.verifyTaskFields,
   controllersTasks.insertTaks);
 
-router.put('/tasks',
+router.put('/tasks/:id',
   middlewaresTasks.validToken,
-  middlewaresTasks.verifyTaskFields,
+  middlewaresTasks.verifyUpdateTaskFields,
   middlewaresTasks.verifyId,
   controllersTasks.editTask);
 

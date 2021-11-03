@@ -46,8 +46,22 @@ const validToken = (req, res, next) => {
   });
 };
 
+const schemaUpdateTask = Joi.object({
+  task: Joi.string().min(1).required(),
+  status: Joi.string().min(1).required(),
+});
+
+const verifyUpdateTaskFields = (req, res, next) => {
+  const { error } = schemaUpdateTask.validate(req.body);
+  if (error && error.details.find((err) => err)) {
+    return res.status(StatusCodes.NOT_FOUND).json(errorMessage(error.message));
+  }
+  return next();
+};
+
 module.exports = {
   verifyTaskFields,
   verifyId,
   validToken,
+  verifyUpdateTaskFields,
 };

@@ -6,6 +6,7 @@ import verifyToken from '../services/VerifyToken';
 import GetAllTasks from '../services/GetAllTasks';
 import LogOut from '../services/LogOut';
 import CardTask from '../components/CardTask';
+import './css/Home.css';
 
 function Home() {
   const [logged, setLogged] = useState(true);
@@ -33,6 +34,12 @@ function Home() {
     return <Redirect to="/" />;
   }
 
+  const id = '_id';
+
+  const updateAllTasks = (responseTasks) => {
+    setGetAllTasks(responseTasks);
+  };
+
   return (
     <div>
       <Navbar bg="light" variant="light">
@@ -49,9 +56,17 @@ function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      { allTasks
-        ? allTasks.map((task) => <CardTask task={task} />)
-        : <p>Loading..</p> }
+      <div className="cards-container">
+        { allTasks
+          ? allTasks.map((task) => (
+            <CardTask
+              key={task[id]}
+              task={task}
+              updateAllTasks={updateAllTasks}
+            />
+          ))
+          : <div>Loading..</div> }
+      </div>
     </div>
   );
 }
