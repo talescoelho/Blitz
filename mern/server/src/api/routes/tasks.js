@@ -9,17 +9,19 @@ router.post('/tasks',
   middlewaresTasks.verifyTaskFields,
   controllersTasks.insertTaks);
 
+router.put('/tasks/:id',
+  middlewaresTasks.validToken,
+  middlewaresTasks.verifyUpdateTaskFields,
+  middlewaresTasks.verifyId,
+  controllersTasks.editTask);
+
 router.get('/tasks',
+  middlewaresTasks.validToken,
   controllersTasks.getAllTasks);
 
-module.exports = router;
+router.delete('/tasks/:id',
+  middlewaresTasks.validToken,
+  middlewaresTasks.verifyId,
+  controllersTasks.deleteTask);
 
-// caminho: GET "/tasks" usuário comum recuperando todas as "tasks"
-//   2) caminho: GET "/tasks" "ADMIN" comum recuperando todas as "tasks"
-// Recuperar as "tasks"
-//   3) caminho: GET "/tasks/:id" usuário recuperando suas próprias tasks
-//   4) caminho: GET "/tasks/:id" sem task inserida pelo usuário
-// Recuperar as "tasks"
-//   5) caminho: GET "/tasks/search" usuário recuperando as tasks de sua "area"
-//   6) caminho: GET "/tasks/search" "ADMIN" recuperando as tasks de outra "area"
-//   7) caminho: GET "/tasks/search" usuário recuperando as tasks de outra "area"
+module.exports = router;

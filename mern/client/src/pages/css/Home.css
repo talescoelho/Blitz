@@ -1,0 +1,33 @@
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.card-item {
+  margin: 0 5px;
+}
+
+.sort-task {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.sort-task button {
+  margin-left: 5px;
+}
+
+.insert-task {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.insert-task button {
+  width: 150px;
+  height: 50px;
+}
