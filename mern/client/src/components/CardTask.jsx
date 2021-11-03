@@ -6,11 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { GiConfirmed } from 'react-icons/gi';
-import { TiDeleteOutline } from 'react-icons/ti';
-import { FcCancel } from 'react-icons/fc';
+import { TiDeleteOutline, TiCancelOutline } from 'react-icons/ti';
+// import { TiCancelOutline } from 'react-icons/ti';
 import PropTypes from 'prop-types';
 import UpdateTask from '../services/UpdateTask';
 import DeleteTask from '../services/DeleteTask';
+import GetAllTasks from '../services/GetAllTasks';
 
 const variant = {
   pendente: 'danger',
@@ -18,7 +19,7 @@ const variant = {
   pronto: 'success',
 };
 
-function CardTask({ task, updateAllTasks }) {
+function CardTask({ task, updateAllTasks, admin }) {
   const [state, setState] = useState(task);
   const [update, setUpdate] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
@@ -61,6 +62,8 @@ function CardTask({ task, updateAllTasks }) {
     const id = '_id';
     const { status } = changeTask;
     await UpdateTask(localStorage.getItem('token'), task[id], { task: changeTask.task, status });
+    const response = await GetAllTasks(localStorage.getItem('token'));
+    updateAllTasks(response);
     setUpdate(false);
   };
 
@@ -71,7 +74,7 @@ function CardTask({ task, updateAllTasks }) {
   };
 
   return (
-    <div>
+    <div className="card-item">
       <Card
         border={variant[changeTask.status]}
         style={{ width: '18rem' }}
@@ -111,7 +114,7 @@ function CardTask({ task, updateAllTasks }) {
                       <GiConfirmed size="1.4em" color="black" />
                     </Button>
                     <Button variant="outline-light" style={{ marginLeft: '5px' }} onClick={() => setUpdate(false)}>
-                      <FcCancel size="1.4em" color="black" />
+                      <TiCancelOutline size="1.5em" color="black" />
                     </Button>
                   </>
                 )}
@@ -121,7 +124,7 @@ function CardTask({ task, updateAllTasks }) {
                       <TiDeleteOutline size="1.4em" color="black" />
                     </Button>
                     <Button variant="outline-light" style={{ marginLeft: '5px' }} onClick={() => setDeleteTask(false)}>
-                      <FcCancel size="1.4em" color="black" />
+                      <TiCancelOutline size="1.5em" color="black" />
                     </Button>
                   </>
                 )}
@@ -147,10 +150,14 @@ function CardTask({ task, updateAllTasks }) {
               )}
           </Card.Title>
           <Card.Text>
-            {uperCase(state.name)}
+            {`${uperCase(state.name)} ${admin ? ` - ${state.area}` : ''}`}
             <br />
             {`Criado: ${formatDate(state.create)}`}
             <br />
+            { changeTask.status === 'pendente'
+              && (
+                `Alterado: ${changeTask.update}\n`
+              )}
             { changeTask.status === 'andamento'
               ? (
                 `Iniciado: ${changeTask.update}\n`

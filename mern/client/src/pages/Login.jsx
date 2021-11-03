@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import login from '../services/Login';
 import verifyToken from '../services/VerifyToken';
 import './css/Login.css';
+import InsertNewUser from '../components/InsertNewUser';
 
 function Login() {
   const [validated, setValidated] = useState(false);
@@ -69,8 +70,9 @@ function Login() {
               required
             />
             <Button variant="primary" type="button" onClick={handleSubmit} style={{ width: '100%', marginTop: '10px' }}>
-              Submit
+              Logar
             </Button>
+            <InsertNewUser token={token} />
           </Form.Group>
         </Row>
       </Form>
