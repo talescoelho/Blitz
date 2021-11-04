@@ -10,7 +10,7 @@ import InsertNewUser from '../components/InsertNewUser';
 
 function Login() {
   const [validated, setValidated] = useState(false);
-  const [user, setUser] = useState({ email: 'user@email.com', password: '123456' });
+  const [user, setUser] = useState({ email: '', password: '' });
   const [loggedUser, setLoggedUser] = useState(false);
 
   const handleSubmit = async (event) => {
