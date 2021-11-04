@@ -1,7 +1,5 @@
 const models = require('../models');
 
-// const SECRET_KEY = 'secretKey';
-
 const data = {
   status: 'pendente',
 };
