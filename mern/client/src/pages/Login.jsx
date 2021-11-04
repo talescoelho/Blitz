@@ -46,7 +46,7 @@ function Login() {
     <div className="main-items">
       <Form noValidate validated={validated}>
         <Row className="justify-content-center">
-          <img src="logo.png" alt="pageIcon" style={{ width: '50%' }} />
+          <img src="logo.png" alt="pageIcon" style={{ width: '300px' }} />
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
