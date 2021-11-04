@@ -56,22 +56,8 @@ function Home() {
 
   const sortFields = (key) => {
     setGetAllTasks([...allTasks.sort((a, b) => {
-      if (sorted) {
-        if (a[key] < b[key]) {
-          return -1;
-        }
-        if (a[key] > b[key]) {
-          return 1;
-        }
-        return 0;
-      }
-      if (a[key] > b[key]) {
-        return -1;
-      }
-      if (a[key] < b[key]) {
-        return 1;
-      }
-      return 0;
+      if (!sorted) return a[key].localeCompare(b[key]);
+      return b[key].localeCompare(a[key]);
     })]);
     setSorted(!sorted);
   };
