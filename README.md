@@ -75,7 +75,7 @@ $ yarn start
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:{usuario}/Ebytr.git
+$ git clone git@github.com:talescoelho/Blitz.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd server
@@ -96,7 +96,7 @@ $ npm run test:dev
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:{usuario}/Ebytr.git
+$ git clone git@github.com:talescoelho/Blitz.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd server
