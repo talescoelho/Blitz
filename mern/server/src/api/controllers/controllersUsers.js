@@ -27,8 +27,17 @@ const findId = async (req, res) => {
   return res.status(StatusCodes.OK).json({ user });
 };
 
+const getAllUsers = async (req, res) => {
+  const AllUsers = await servicesUsers.getAllUsers();
+  if (AllUsers.message) {
+    return res.status(StatusCodes.NOT_ACCEPTABLE).json(AllUsers);
+  }
+  return res.status(StatusCodes.OK).json({ users: AllUsers });
+};
+
 module.exports = {
   insertUser,
   logIn,
   findId,
+  getAllUsers,
 };
