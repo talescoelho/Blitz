@@ -51,7 +51,7 @@ function CardTask({ task, updateAllTasks, admin }) {
     setState(task);
   }, [task]);
 
-  const uperCase = (text) => text.split('')
+  const upperCase = (text) => text.split('')
     .reduce((acc, el) => (acc.length === 1 ? acc.toUpperCase() + el : acc + el));
 
   const handleChange = ({ target }) => {
@@ -67,7 +67,7 @@ function CardTask({ task, updateAllTasks, admin }) {
     setUpdate(false);
   };
 
-  const handleDellete = async () => {
+  const handleDelete = async () => {
     const id = '_id';
     const response = await DeleteTask(localStorage.getItem('token'), task[id]);
     updateAllTasks(response);
@@ -85,7 +85,7 @@ function CardTask({ task, updateAllTasks, admin }) {
             <Container>
               <Navbar.Brand>
                 {!update
-                  ? uperCase(changeTask.status)
+                  ? upperCase(changeTask.status)
                   : (
                     <select name="status" onChange={handleChange}>
                       <option>Status</option>
@@ -120,7 +120,7 @@ function CardTask({ task, updateAllTasks, admin }) {
                 )}
                 { deleteTask && (
                   <>
-                    <Button variant="outline-light" style={{ marginLeft: '5px' }} onClick={handleDellete}>
+                    <Button variant="outline-light" style={{ marginLeft: '5px' }} onClick={handleDelete}>
                       <TiDeleteOutline size="1.4em" color="black" />
                     </Button>
                     <Button variant="outline-light" style={{ marginLeft: '5px' }} onClick={() => setDeleteTask(false)}>
@@ -134,14 +134,14 @@ function CardTask({ task, updateAllTasks, admin }) {
         </Card>
         <Card.Body>
           <Card.Title>
-            {!update ? uperCase(changeTask.task)
+            {!update ? upperCase(changeTask.task)
               : (
                 <>
                   <Col sm="10">
                     <Form.Control
                       type="text"
                       name="task"
-                      placeholder={uperCase(state.task)}
+                      placeholder={upperCase(state.task)}
                       value={changeTask.task}
                       onChange={handleChange}
                     />
@@ -150,7 +150,7 @@ function CardTask({ task, updateAllTasks, admin }) {
               )}
           </Card.Title>
           <Card.Text>
-            {`${uperCase(state.name)} ${admin ? ` - ${state.area}` : ''}`}
+            {`${upperCase(state.name)} ${admin ? ` - ${state.area}` : ''}`}
             <br />
             {`Criado: ${formatDate(state.create)}`}
             <br />

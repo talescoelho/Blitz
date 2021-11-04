@@ -14,7 +14,6 @@ const getAllTasks = async (req, res) => {
     tasks = await servicesTasks.getAllTasks();
   } else {
     tasks = await servicesTasks.getAllRoleTasks(decoded.area);
-    // console.log(tasks)
     tasks = tasks.filter((task) => !task.private || (task.private && task.userId === userId));
   }
   return res.status(StatusCodes.OK).json({ tasks });
