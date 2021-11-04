@@ -75,7 +75,7 @@ $ yarn start
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:{usuario}/Ebytr.git
+$ git clone git@github.com:talescoelho/Blitz.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd server
@@ -96,7 +96,7 @@ $ npm run test:dev
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:{usuario}/Ebytr.git
+$ git clone git@github.com:talescoelho/Blitz.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd server
@@ -127,6 +127,7 @@ $ yarn run test:dev
   <li><a href="https://pt-br.reactjs.org/">ReactJS</a></li>
     <ul>
       <li>Javascript</li>
+      <li><a href="https://www.npmjs.com/package/react-jwt">react-jwt</a></li>
       <li><a href="https://react-bootstrap.netlify.app/">React-Bootstrap</a></li>
       <li><a href="https://react-icons.github.io/react-icons/">React-Icons</a></li>
       <li><a href="https://axios-http.com/docs/intro">Axios</a></li>
@@ -139,6 +140,7 @@ $ yarn run test:dev
       <li><a href="https://expressjs.com/pt-br/">Express</a></li>
       <li><a href="https://www.npmjs.com/package/jsonwebtoken">Jsonwebtoken</a></li>
       <li><a href="https://www.npmjs.com/package/nodemon">Nodemon</a></li>
+      <li><a href="https://www.npmjs.com/package/http-status-codes">http-status-codes</a></li>
     </ul>
   <li><a href="https://www.mongodb.com/pt-br/cloud/atlas/register">MongoDB</a></li>
 </ul>
