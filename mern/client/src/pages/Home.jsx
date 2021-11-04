@@ -49,21 +49,21 @@ function Home() {
     setGetAllTasksInitial(responseTasks);
   };
 
-  const sortFields = (index) => {
+  const sortFields = (key) => {
     setGetAllTasks([...allTasks.sort((a, b) => {
       if (sorted) {
-        if (a[index] < b[index]) {
+        if (a[key] < b[key]) {
           return -1;
         }
-        if (a[index] > b[index]) {
+        if (a[key] > b[key]) {
           return 1;
         }
         return 0;
       }
-      if (a[index] > b[index]) {
+      if (a[key] > b[key]) {
         return -1;
       }
-      if (a[index] < b[index]) {
+      if (a[key] < b[key]) {
         return 1;
       }
       return 0;
