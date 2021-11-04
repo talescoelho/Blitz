@@ -43,7 +43,7 @@ function InsertTask({ token, updateAllTasks, setGetAllTasksInitial }) {
 
   return (
     <div>
-      <Button onClick={openModal} type="button">Nova Taks</Button>
+      <Button onClick={openModal} type="button">Nova Tarefa</Button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -53,11 +53,11 @@ function InsertTask({ token, updateAllTasks, setGetAllTasksInitial }) {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>
-              <h2>Insira uma nova Taks</h2>
+              <h2>Insira uma nova Tarefa</h2>
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter task"
+              placeholder="Enter Tarefa"
               autoComplete="off"
               value={task}
               onChange={({ target }) => setTask(target.value)}

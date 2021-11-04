@@ -29,6 +29,11 @@ function Home() {
 
   const { decodedToken } = useJwt(token);
 
+  if (!decodedToken && allTasks) {
+    localStorage.setItem('token', '');
+    return <Redirect to="/" />;
+  }
+
   if (token && !decodedToken) {
     return <div>Loading...</div>;
   }
