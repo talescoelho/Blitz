@@ -152,8 +152,4 @@ $ yarn run test:dev
 - Tales Coelho dos Santos
 - [Linkedin](https://www.linkedin.com/in/tales-coelho/)
 
-<center>
-
-![obrigado](https://acegif.com/wp-content/gif/obr1gdo-26.gif)
-
-</center>
+<img src="https://acegif.com/wp-content/gif/obr1gdo-26.gif" alt="GIF">
