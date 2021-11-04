@@ -96,7 +96,7 @@ function InsertNewUser({ token }) {
               name="area"
               onChange={({ target }) => setTask({ ...task, [target.name]: target.value })}
             >
-              <option> </option>
+              <option>Selecione uma Área</option>
               <option value="ti">TI</option>
               <option value="rh">RH</option>
               <option value="adm">ADM</option>
