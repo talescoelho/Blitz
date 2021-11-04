@@ -64,7 +64,7 @@ function Login() {
             <Form.Control
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Enter Password"
               value={user.password}
               onChange={handleChange}
               required
