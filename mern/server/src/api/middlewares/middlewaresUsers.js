@@ -2,7 +2,10 @@ const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 const validator = require('email-validator');
 const { ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken');
 const models = require('../models');
+
+const SECRET_KEY = 'secretKey';
 
 const errorMessage = (message) => ({
   message,
@@ -63,8 +66,26 @@ const verifyId = (req, res, next) => {
   return next();
 };
 
+const validToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(StatusCodes.UNAUTHORIZED).json(errorMessage('missing auth token'));
+  }
+  return jwt.verify(authorization, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(StatusCodes.UNAUTHORIZED).json(errorMessage(err.message));
+    }
+    if (decoded.role !== 'admin') {
+      return res.status(StatusCodes.UNAUTHORIZED).json(errorMessage('não autorizado'));
+    }
+
+    return next();
+  });
+};
+
 module.exports = {
   verifyUserFields,
   verifyLoginFields,
   verifyId,
+  validToken,
 };

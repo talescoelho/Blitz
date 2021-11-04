@@ -33,8 +33,18 @@ const findId = async (id) => {
   return { name, area };
 };
 
+const getAllUsers = async () => {
+  const users = await models.getAll('users');
+  return users.map(({
+    name, email, area, role,
+  }) => ({
+    name, email, area, role,
+  }));
+};
+
 module.exports = {
   insertUser,
   logIn,
   findId,
+  getAllUsers,
 };
